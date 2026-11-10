@@ -161,4 +161,10 @@ st.subheader("📋 상세 순위표")
 display_df = df[['rank', '순위변동', '영화명', 'openDt', 'audiCnt', 'audiAcc', 'scrnCnt']].copy()
 display_df.columns = ['순위', '순위변동', '영화명', '개봉일', '관객수', '누적관객', '스크린수']
 
+search = st.text_input("🔎 영화 검색", value=st.query_params.get("q", ""))
+if search:
+    st.markdown(f"<p><b>'{search}'</b> 검색 결과</p>", unsafe_allow_html=True)
+    display_df = display_df[display_df['영화명'].str.contains(search, regex=False)]
+display_df.columns = ['순위', '순위변동', '영화명', '개봉일', '관객수', '누적관객', '스크린수']
+
 st.dataframe(display_df, hide_index=True, use_container_width=True)
